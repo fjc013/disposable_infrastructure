@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :dev do |dev|
     # define the base box and OS
     dev.vm.box = "ubuntu/trusty32"
+    # dev.vm.box_url = "https://atlas.hashicorp.com/ubuntu/boxes/trusty32/versions/20160406.0.0/providers/virtualbox.box"
     #
     # Configure the network
     dev.vm.network :private_network, ip: "192.168.100.100"
@@ -34,13 +35,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
     #
+    # Sync the /vagrant folder on the VM with this project directory
+    dev.vm.synced_folder ".", "/vagrant"
+    #
     # Initial provisioning for the vagrant VM
     #
     dev.vm.provision :shell, :path => "provisioning.sh"
   end
-  #
-  # Sync the /vagrant folder on the VM with this project directory
-  dev.vm.synced_folder ".", "/vagrant"
+
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
