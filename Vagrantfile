@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   config.vm.define :dev do |dev|
     # define the base box and OS
-    dev.vm.box = "ubuntu/trusty32"
+    dev.vm.box = "ubuntu/trusty64"
     # dev.vm.box_url = "https://atlas.hashicorp.com/ubuntu/boxes/trusty32/versions/20160406.0.0/providers/virtualbox.box"
     #
     # Configure the network
@@ -42,6 +42,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #
     dev.vm.provision :shell, :path => "provisioning.sh"
   end
+  #
+  # Define App Target VMs
+  #
+  config.vm.define :mendix1 do |mendix1|
+    mendix1.vm.box = "ubuntu/trusty64"
+    mendix1.vm.network :private_network, ip: "192.168.100.101"
+    mendix1.vm.hostname = "mendix1.local"
+    mendix1.ssh.forward_agent = true
+  end
+  config.vm.define :mendix2 do |mendix2|
+    mendix2.vm.box = "ubuntu/trusty64"
+    mendix2.vm.network :private_network, ip: "192.168.100.102"
+    mendix2.vm.hostname = "mendix2.local"
+    mendix2.ssh.forward_agent = true
+  end
+  
+
 
 
   # The url from where the 'config.vm.box' box will be fetched if it

@@ -17,3 +17,7 @@ echo "Installing ansible dependencies"
 /usr/local/bin/pip install git+git://github.com/openstack/python-novaclient
 /usr/local/bin/pip install docker-py
 /usr/local/bin/pip install pyrax
+
+echo "Removing the default /etc/ansible directory, and symlink it to the vagrant folder"
+rm -rf /etc/ansible
+ln -s /vagrant/ansible/etc/ansible/ /etc/ansible
