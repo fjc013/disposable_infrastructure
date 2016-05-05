@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Allow symlinks, set ram to 2gb (not)
     #
     dev.vm.provider :virtualbox do |vb|
-      vb.customize ["setextradata", "id", "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
       # vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
     #
