@@ -1,0 +1,4 @@
+[mendix]
+name=Mendix
+baseurl="https://packages.mendix.com/platform/rpm/"
+gpgcheck=0

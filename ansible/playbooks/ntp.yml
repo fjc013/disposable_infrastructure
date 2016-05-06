@@ -1,0 +1,15 @@
+---
+#
+# This playbook deploys the appd machine agent on all hosts
+# it also ensures ntp is installed and running
+#
+
+- name: install ntp on remote mendix vms
+  hosts:  mendix
+  become: true
+  become_method:  sudo
+#
+  roles:
+    - ntp
+
+    

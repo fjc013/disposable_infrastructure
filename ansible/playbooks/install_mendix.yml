@@ -1,0 +1,22 @@
+---
+#
+# This playbook installs and configures mendix on remote machines (centos only)
+#
+
+- name: install ntp
+  hosts:  mendix
+  become: true
+  become_method:  sudo
+#
+  roles:
+    - ntp
+    
+- name: install m2ee tools
+  hosts:  mendix
+  become: true
+  become_method:  sudo
+#
+  roles:
+    - install_mendix
+
+# fin

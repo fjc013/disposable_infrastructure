@@ -1,0 +1,13 @@
+---
+#
+# This playbook deploys the appd machine agent on all hosts
+# it also ensures ntp is installed and running
+#
+- name: apply common configuration to localhost
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+#
+  roles:
+    - ntp

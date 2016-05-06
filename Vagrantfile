@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# to make mananging ssh keys easier
+# require_relative './vagrant/key_authorization'
+
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 #
@@ -15,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "base"
+  # authorize_key_for_root config, '~/.ssh/id_dsa.pub', '~/ssh/id_rsa.pub'
   #
   # Create the dev VM
   #
@@ -46,13 +50,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Define App Target VMs
   #
   config.vm.define :mendix1 do |mendix1|
-    mendix1.vm.box = "ubuntu/trusty64"
+    mendix1.vm.box = "bento/centos-7.2"
+    # mendix1.vm.box = "ubuntu/trusty64"
     mendix1.vm.network :private_network, ip: "192.168.100.101"
     mendix1.vm.hostname = "mendix1.local"
     mendix1.ssh.forward_agent = true
   end
   config.vm.define :mendix2 do |mendix2|
-    mendix2.vm.box = "ubuntu/trusty64"
+    mendix2.vm.box = "bento/centos-7.2"
+    # mendix2.vm.box = "ubuntu/trusty64"
     mendix2.vm.network :private_network, ip: "192.168.100.102"
     mendix2.vm.hostname = "mendix2.local"
     mendix2.ssh.forward_agent = true

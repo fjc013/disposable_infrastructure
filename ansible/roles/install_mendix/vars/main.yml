@@ -1,0 +1,20 @@
+---
+# vars file for install_mendix
+mendix_dir_list:
+  - myapp
+  - myapp/runtime
+  - myapp/web
+  - myapp/model
+  - myapp/data
+  - myapp/data/database
+  - myapp/data/files
+  - myapp/data/model-upload
+  - myapp/data/tmp
+
+  #
+mendix_packages:
+    - rsync
+    - python-httplib2
+    - PyYAML
+    - m2ee-tools
+# fin
