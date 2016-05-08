@@ -1,15 +1,15 @@
 ---
 # vars file for install_mendix
 mendix_dir_list:
-  - myapp
-  - myapp/runtime
-  - myapp/web
-  - myapp/model
-  - myapp/data
-  - myapp/data/database
-  - myapp/data/files
-  - myapp/data/model-upload
-  - myapp/data/tmp
+  - {{ mendix_user }}
+  - {{ mendix_user }}/runtime
+  - {{ mendix_user }}/web
+  - {{ mendix_user }}/model
+  - {{ mendix_user }}/data
+  - {{ mendix_user }}/data/database
+  - {{ mendix_user }}/data/files
+  - {{ mendix_user }}/data/model-upload
+  - {{ mendix_user }}/data/tmp
 
   #
 mendix_packages:
