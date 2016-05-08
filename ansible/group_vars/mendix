@@ -1,0 +1,10 @@
+# Variables associated with inventory group "Mendix"
+#
+# The mendix user (and group)
+mendix_user: "mxapp"
+#
+# The mendix user's password - crypted with python crypt
+# python -c 'import crypt; print crypt.crypt("This is my password", $1$SomeSalt$")'
+mendix_password: "$1$SomeSalt$LdoARkSX.XYRa6.xQy2bc1"
+epel_repo: "http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm"
+epel_repo_rpm: "/var/tmp/epel-release-7-6.noarch.rpm"

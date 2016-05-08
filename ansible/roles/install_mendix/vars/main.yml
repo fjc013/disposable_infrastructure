@@ -13,8 +13,8 @@ mendix_dir_list:
 
   #
 mendix_packages:
-    - rsync
     - python-httplib2
     - PyYAML
     - m2ee-tools
+    - yum-utils
 # fin

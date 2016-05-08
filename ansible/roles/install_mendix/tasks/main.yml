@@ -17,12 +17,12 @@
 #
 # Install the EPEL repos for Mendix dependencies
 - name: Get EPEL repos
-  get_url: url=http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm dest=/var/tmp/epel-release-7-6.noarch.rpm
+  get_url: url='{{epel_repo}}' dest='{{epel_repo_rpm}}'
   tags:  install_mendix
 #
 # Install the EPEL repo via rpm
 - name: Install the EPEL repo via rpm
-  yum:  name=/var/tmp/epel-release-7-6.noarch.rpm state=present
+  yum:  name='{{epel_repo_rpm}}' state=present
   tags:  install_mendix
 #
 # 1.1 Install m2ee-tools
@@ -31,20 +31,24 @@
   with_items: '{{mendix_packages}}'
   tags:   install_mendix
 #
+# Create the Mendix user group
+- name: Create the Mendix user group
+  group: name='{{mendix_user}}' state=present
+  tags: install_mendix
 # 2. Create mendix app user "myapp"
-- name:     create user myapp
-  user:   name="myapp" comment="Mendix user myapp"
+- name:     create user '{{mendix_user}}'
+  user:   name='{{mendix_user}}' password='{{mendix_password}}' group='{{mendix_user}}' comment="Mendix user {{mendix_user}}"
   tags:   install_mendix
 #
 # 3. Create application directory
 - name: Create the 1st application directory structure
-  file:   path=/srv/mendix/{{ item }} owner=myapp mode=0700 state=directory
+  file:   path=/srv/mendix/{{ item }} owner='{{mendix_user}}' mode=0755 state=directory
   with_items: '{{mendix_dir_list }}'
   tags:   install_mendix
 #
-# 4. Create hidden dir .m2ee in ~/myapp
-- name: Create hidden dir .m2ee in /home/myapp
-  file:   path="/home/myapp/.m2ee" owner=myapp state=directory
+# 4. Create hidden dir .m2ee in /home/'{{mendix_user}}'
+- name: Create hidden dir .m2ee in Mendix user homedir
+  file:   path="/home/{{mendix_user}}/.m2ee" owner='{{mendix_user}}' state=directory
   tags:   install_mendix
 #
 # find the full path to the sample m2ee.yaml file
@@ -54,6 +58,6 @@
   register: path_to_sample
   tags:     install_mendix
 # 5. Copy sample m2ee.yaml to myapp/.m2ee/m2ee.yaml **New - use synchronize
-- name: Copy /usr/share/doc/user-specific-m2ee.yaml to /home/myapp/.m2ee/
-  copy: remote_src=true src='{{path_to_sample.stdout}}' dest="/home/myapp/.m2ee/m2ee.yaml" owner=myapp group=myapp
+- name: Copy /usr/share/doc/user-specific-m2ee.yaml to /home/'{{mendix_user}}'/.m2ee/
+  copy: remote_src=true src='{{path_to_sample.stdout}}' dest="/home/{{mendix_user}}/.m2ee/m2ee.yaml" owner='{{mendix_user}}' group='{{mendix_user}}'
   tags:   install_mendix
