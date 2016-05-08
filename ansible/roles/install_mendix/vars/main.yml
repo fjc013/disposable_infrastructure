@@ -17,4 +17,5 @@ mendix_packages:
     - PyYAML
     - m2ee-tools
     - yum-utils
+    - java-1.8.0-openjdk
 # fin
