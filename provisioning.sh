@@ -21,3 +21,7 @@ echo "Installing ansible dependencies"
 echo "Removing the default /etc/ansible directory, and symlink it to the vagrant folder"
 rm -rf /etc/ansible
 ln -s /vagrant/ansible/etc/ansible/ /etc/ansible
+
+echo "Creating the ansible log file"
+sudo touch /var/log/ansible.log
+sudo chmod 777 /var/log/ansible.log

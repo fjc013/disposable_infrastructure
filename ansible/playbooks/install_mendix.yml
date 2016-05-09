@@ -18,5 +18,20 @@
 #
   roles:
     - install_mendix
-
+#
+- name: install appdynamics machine agent
+  hosts:  mendix
+  become: true
+  become_method: sudo
+#  
+  roles:
+    - machineagent
+#
+- name: install appdynamics app agent
+  hosts: mendix
+  become: true
+  become_method: sudo
+#
+  roles:
+    - appagent
 # fin

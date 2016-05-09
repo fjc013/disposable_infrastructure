@@ -61,3 +61,20 @@
 - name: Copy /usr/share/doc/user-specific-m2ee.yaml to /home/'{{mendix_user}}'/.m2ee/
   copy: remote_src=true src='{{path_to_sample.stdout}}' dest="/home/{{mendix_user}}/.m2ee/m2ee.yaml" owner='{{mendix_user}}' group='{{mendix_user}}'
   tags:   install_mendix
+#
+# Copy the m2ee system wide sample yaml to /etc/m2ee
+#
+- name: Create /etc/m2ee
+  file:  path="/etc/m2ee" state=directory
+  tags:  install_mendix
+#
+- name: Find the full path to the system wide yaml file
+  shell:  find /usr/share/doc -name 'system-wide-m2ee.yaml' -print
+  register: path_to_system_wide
+  tags:  install_mendix
+#
+- name: Copy the system wide sample to /etc/m2ee
+  copy:  remote_src=true src='{{path_to_system_wide.stdout}}' dest="/etc/m2ee/m2ee.yaml"
+  tags:  install_mendix
+#
+# fin
