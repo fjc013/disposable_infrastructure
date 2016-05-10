@@ -8,3 +8,12 @@ mendix_user: "mxapp"
 mendix_password: "$6$W9.0N9M2jd$kekpOUr9GG./Lr1u5KZDS1h5xRTuohBdqKs0cJyyzLWnD8lVR8nB4mmMQZH2v8wM9iCJ5nvxx2Z7bi5sjWcLm0"
 epel_repo: "http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm"
 epel_repo_rpm: "/var/tmp/epel-release-7-6.noarch.rpm"
+#
+# Postgres Options
+# dbname == mendix_user
+# dbuser = mendix_user
+# dbpassword == (see docs) created with  echo "md5`echo -n "SomeSaltmxapp" | openssl md5`"
+dbname: '{{mendix_user}}'
+dbuser: '{{mendix_user}}'
+dbpasword: 39089376c5e5a1bfc009392835bc17bf
+#

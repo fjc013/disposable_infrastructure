@@ -18,4 +18,6 @@ mendix_packages:
     - m2ee-tools
     - yum-utils
     - java-1.8.0-openjdk
+    - postgresql-server
+    - postgresql-contrib
 # fin
