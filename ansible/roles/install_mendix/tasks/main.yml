@@ -37,7 +37,7 @@
   tags: install_mendix
 # 2. Create mendix app user "myapp"
 - name:     create user '{{mendix_user}}'
-  user:   name='{{mendix_user}}' password='{{mendix_password}}' group='{{mendix_user}}' comment="Mendix user {{mendix_user}}"
+  user:   name='{{mendix_user}}' password='{{mendix_password}}' group='{{mendix_user}}' comment="Mendix user {{mendix_user}}" generate_ssh_key=yes state=present
   tags:   install_mendix
 #
 # 3. Create application directory

@@ -4,7 +4,7 @@
 mendix_user: "mxapp"
 #
 # The mendix user's password - crypted with python crypt
-# python -c 'import crypt; print crypt.crypt("This is my password", $1$SomeSalt$")'
-mendix_password: "$1$SomeSalt$LdoARkSX.XYRa6.xQy2bc1"
+# mkpasswd --method=SHA-512 (SomeSalt)
+mendix_password: "$6$W9.0N9M2jd$kekpOUr9GG./Lr1u5KZDS1h5xRTuohBdqKs0cJyyzLWnD8lVR8nB4mmMQZH2v8wM9iCJ5nvxx2Z7bi5sjWcLm0"
 epel_repo: "http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm"
 epel_repo_rpm: "/var/tmp/epel-release-7-6.noarch.rpm"
