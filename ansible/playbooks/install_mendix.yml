@@ -34,4 +34,21 @@
 #
   roles:
     - appagent
+#
+- name: install PostgreSQL
+  hosts: mendix
+  become: true
+  become_method: sudo
+#
+  roles:
+    - postgresql
+#
+- name: Add Mendix DB table and DB user
+  hosts: mendix
+  become: true
+  become_method: sudo
+#
+  roles:
+    - mendixdb
+
 # fin

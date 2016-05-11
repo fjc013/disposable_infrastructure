@@ -12,12 +12,16 @@ mendix_dir_list:
   - "{{ mendix_user }}/data/tmp"
 
   #
+#
+# Required packages for Mendix environment
+# python-psycopg2 is required for the ansible postgresql_db module
+#  creates databases and users
+#
 mendix_packages:
     - python-httplib2
     - PyYAML
     - m2ee-tools
     - yum-utils
     - java-1.8.0-openjdk
-    - postgresql-server
-    - postgresql-contrib
+    - python-psycopg2
 # fin

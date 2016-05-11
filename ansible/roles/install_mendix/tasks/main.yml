@@ -42,9 +42,19 @@
 #
 # 3. Create application directory
 - name: Create the 1st application directory structure
-  file:   path=/srv/mendix/{{ item }} owner='{{mendix_user}}' mode=0755 state=directory
+  file:   path=/srv/mendix/{{ item }} owner='{{mendix_user}}' mode=0775 state=directory
   with_items: '{{mendix_dir_list }}'
   tags:   install_mendix
+#
+# Create Mendix logging directory
+- name: Create the Mendix Log directory
+  file: path={{mendix_logdir}} owner={{mendix_user}} mode=0775 state=directory
+  tags: install_mendix
+#  
+# 3a. Create the Mendix user logging file
+- name: Create the Mendix User Logging file
+  file: path={{mendix_logdir}}/log owner={{mendix_user}} mode=0775 state=touch
+  tags: install_mendix
 #
 # 4. Create hidden dir .m2ee in /home/'{{mendix_user}}'
 - name: Create hidden dir .m2ee in Mendix user homedir

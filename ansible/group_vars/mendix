@@ -15,5 +15,9 @@ epel_repo_rpm: "/var/tmp/epel-release-7-6.noarch.rpm"
 # dbpassword == (see docs) created with  echo "md5`echo -n "SomeSaltmxapp" | openssl md5`"
 dbname: '{{mendix_user}}'
 dbuser: '{{mendix_user}}'
-dbpasword: 39089376c5e5a1bfc009392835bc17bf
+dbpassword: 39089376c5e5a1bfc009392835bc17bf
+dbhost: localhost
+dbport: 5432
 #
+# Need a Mendix logging file
+mendix_logdir: "/var/log/{{mendix_user}}/"
