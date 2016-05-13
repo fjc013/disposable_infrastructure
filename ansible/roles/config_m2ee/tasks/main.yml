@@ -1,0 +1,43 @@
+---
+# tasks file for config_m2ee
+#
+# Tasks to modify user specific m2ee.yaml file
+#
+# 1. Modify /home/mxapp/.m2ee/m2ee.yaml
+# To save a copy of the orignal, insert "backup=yes"
+# within lineinfile block
+#
+# Insert mxnode section into m2ee.yaml
+- name: Insert mxnode section into m2ee.yaml
+  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+    insertbefore='^m2ee:'
+    line="{{ item }}"
+  with_items:
+    - '{{ mxjar_repo }}'
+  tags: config_m2ee
+#
+- name: Modify javaopts within m2ee.yaml
+  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+    insertafter='javaopts'
+    line="{{ m2ee_jvmArg }}"
+  tags: config_m2ee
+#
+# Iterate over a list of var names and new values
+# pattern is, 'some white space, var name: old value'  
+# use backrefs=yes and state=present
+- name: Apply custom variable configuration
+  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+    backrefs=yes
+    state=present
+    regexp={{ item.varname }}
+    line={{ item.value }}
+  with_items: 
+    - '{{ m2ee_vars }}'
+  tags: config_m2ee
+#
+# This shouldn't really go here...
+- name: Fetch sample mda from mendix download site
+  get_url: url={{ sample_mda }} dest={{ destdir_mda }} mode=0775
+  tags: config_m2ee
+#  
+# fin  

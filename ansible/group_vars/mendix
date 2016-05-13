@@ -20,4 +20,40 @@ dbhost: localhost
 dbport: 5432
 #
 # Need a Mendix logging file
-mendix_logdir: "/var/log/{{mendix_user}}/"
+mendix_logdir: "/var/log/mendix/{{mendix_user}}/"
+#
+# Begin m2ee.yaml attributes
+#
+# Originally from appd_provision/m2ee/vars
+m2ee_appAgentHome: /opt/appdynamics/appagent/
+m2ee_appAgentJar: javaagent.jar
+#
+# Insert the following into the m2ee.yaml javaopts section
+m2ee_jvmArg: '   "-javaagent:{{ m2ee_appAgentHome }}{{ m2ee_appAgentJar }}",'
+#
+# Insert an mxnode: section into m2ee.yaml that defines the mxjar_repo list
+#  required for the download_runtime m2ee command - must be writable
+mxjar_repo:
+  - 'mxnode:'
+  - ' mxjar_repo: /srv/mendix/{{ mendix_user }}/data/runtime'
+  - ' '
+#
+# Define dict to hold search pattern and new values
+# regex=(^[\s]varname\:) use backrefs as \1\ new value
+#
+m2ee_vars:
+  - { varname: '(^[\s]*app_name\:)', value: '\1 Most Excellent Demo App' }
+  - { varname: '(^[\s]*app_base\:)', value: '\1 /srv/mendix/{{ mendix_user }}' }
+  - { varname: '(^[\s]*admin_pass\:)', value: '\1 $SomeSalt$' }
+  - { varname: '(^[\s]*logfile\:)', value: '\1 {{ mendix_logdir }}log' }
+  - { varname: '(^[\s]*filename\:)', value: '\1 {{ mendix_logdir }}/log' }
+  - { varname: '(^[\s]*DatabaseType\:)', value: '\1 PostgreSQL' }
+  - { varname: '(^[\s]*DatabaseHost\:)', value: '\1 {{ dbhost }}:{{ dbport }}' }
+  - { varname: '(^[\s]*DatabaseName\:)', value: '\1 {{ dbname }}' }
+  - { varname: '(^[\s]*DatabaseUserName\:)', value: '\1 {{ dbuser }}' }
+  - { varname: '(^[\s]*DatabasePassword\:)', value: '\1 {{ dbpassword }}' }
+  - { varname: '^[\s]*\#(runtime_listen.*)', value: ' \1' }
+#
+# Define where to find a sample .mda file and where to put it.
+sample_mda: http://download.mendix.com/sample/sample.mda
+destdir_mda: /srv/mendix/{{ mendix_user }}/data/model-upload/

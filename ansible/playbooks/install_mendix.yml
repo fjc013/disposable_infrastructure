@@ -50,5 +50,13 @@
 #
   roles:
     - mendixdb
+#
+- name: Configure User m2ee.yaml file
+  hosts: mendix
+  become: true
+  become_method: sudo
+#
+  roles:
+    - config_m2ee
 
 # fin

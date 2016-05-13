@@ -10,6 +10,8 @@ mendix_dir_list:
   - "{{ mendix_user }}/data/files"
   - "{{ mendix_user }}/data/model-upload"
   - "{{ mendix_user }}/data/tmp"
+  - "{{ mendix_user }}/data/runtime"
+  - "{{ mendix_user }}/runtime"
 
   #
 #
