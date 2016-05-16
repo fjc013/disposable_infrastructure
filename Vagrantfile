@@ -53,6 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mendix1.vm.box = "bento/centos-7.2"
     # mendix1.vm.box = "ubuntu/trusty64"
     mendix1.vm.network :private_network, ip: "192.168.100.101"
+    mendix1.vm.network :forwarded_port, guest: 8000, host: 10001
     mendix1.vm.hostname = "mendix1.local"
     mendix1.ssh.forward_agent = true
   end
@@ -60,6 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mendix2.vm.box = "bento/centos-7.2"
     # mendix2.vm.box = "ubuntu/trusty64"
     mendix2.vm.network :private_network, ip: "192.168.100.102"
+    mendix2.vm.network :forwarded_port, guest: 8000, host: 10002
     mendix2.vm.hostname = "mendix2.local"
     mendix2.ssh.forward_agent = true
   end

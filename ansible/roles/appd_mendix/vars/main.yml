@@ -25,10 +25,10 @@ m2ee_findEnd: '^\s*sun\.nio\.cs$'
 m2ee_bootDelegation: "org.osgi.framework.bootdelegation=sun.misc,com.singularity.*"
 #
 # Template change current last line to add continuation syntax
-m2ee_sunNioCs: '\tsun.nio.cs,\x5C'
+m2ee_sunNioCs: \tsun.nio.cs,\x5C
 #
 # Template class terminator
-m2ee_comSingularity: '\tcom.singularity'
+m2ee_comSingularity: \tcom.singularity
 #
 m2ee_user: mxapp
 m2ee_script: /usr/bin/m2ee
