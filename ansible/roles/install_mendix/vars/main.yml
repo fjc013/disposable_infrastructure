@@ -26,4 +26,6 @@ mendix_packages:
     - yum-utils
     - java-1.8.0-openjdk
     - python-psycopg2
+    - pexpect
+    - expect
 # fin

@@ -1,0 +1,41 @@
+# run_m2ee.j2
+#{{ ansible_managed }}
+#
+#!/usr/bin/expect -c
+set timeout 60
+set up "unpack {{ mda_filename }}"
+set dr "download_runtime"
+set start "start"
+set quit "quit"
+
+spawn /usr/bin/m2ee --yolo
+
+expect {
+  timeout { send_user "\nfailed to launch  unpack - timeout\n"; exit 1 }
+  eof { send_user "\nfailed to launch unpack - eof\n"; exit 1 }
+  "m2ee({{ mendix_user }}):"
+}
+
+send "$up\r"
+
+expect {
+  timeout { send_user "\nfailed to launch download_runtime - timeout\n"; exit 1 }
+  "m2ee({{ mendix_user }}):"
+}
+
+send "$dr\r"
+
+expect {
+  timeout { send_user "\nfailed to launch start - timeout\n"; exit 1 }
+  "m2ee({{ mendix_user }}):"
+}
+
+send "$start\r"
+
+expect {
+  timeout { send_user "\nfailed to launch quit - timeout\n"; exit 1 }
+  "m2ee({{ mendix_user }}):"
+}
+
+send "$quit\r"
+close

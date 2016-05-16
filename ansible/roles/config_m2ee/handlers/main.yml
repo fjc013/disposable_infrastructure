@@ -1,2 +1,13 @@
 ---
 # handlers file for config_m2ee
+- name: move m2ee script
+  template: src=expect_run_m2ee.j2 dest=/home/{{ mendix_user }}/{{ expect_m2ee_script }} owner={{ mendix_user }} group={{ mendix_user }} mode=0775
+  tags: config_m2ee
+#
+# Execute expect script as mendix mendix_user
+- name: execute m2ee script
+  become_user: '{{ mendix_user }}'
+  become: yes
+  command: expect {{ expect_m2ee_script }}
+  tags: config_m2ee
+#  

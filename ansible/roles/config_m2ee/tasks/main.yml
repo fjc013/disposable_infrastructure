@@ -16,11 +16,11 @@
     - '{{ mxjar_repo }}'
   tags: config_m2ee
 #
-- name: Modify javaopts within m2ee.yaml
-  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
-    insertafter='javaopts'
-    line="{{ m2ee_jvmArg }}"
-  tags: config_m2ee
+#- name: Modify javaopts within m2ee.yaml
+#  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+#    insertafter='javaopts'
+#    line="{{ m2ee_jvmArg }}"
+#  tags: config_m2ee
 #
 # Iterate over a list of var names and new values
 # pattern is, 'some white space, var name: old value'  
@@ -38,6 +38,9 @@
 # This shouldn't really go here...
 - name: Fetch sample mda from mendix download site
   get_url: url={{ sample_mda }} dest={{ destdir_mda }} mode=0775
+  notify:
+    - move m2ee script
+    - execute m2ee script
   tags: config_m2ee
 #  
 # fin  
