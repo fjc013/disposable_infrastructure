@@ -58,5 +58,13 @@
 #
   roles:
     - config_m2ee
+#
+- name: Complete AppD instrumentation of Mendix
+  hosts: mendix
+  become: true
+  become_method: sudo
+#
+  roles:
+    - appd_mendix
 
 # fin
