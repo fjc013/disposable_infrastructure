@@ -26,7 +26,8 @@
 # pattern is, 'some white space, var name: old value'  
 # use backrefs=yes and state=present
 - name: Apply custom variable configuration
-  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+#  lineinfile: dest=/home/{{ mendix_user }}/.m2ee/m2ee.yaml
+  lineinfile:  dest="{{ m2ee_homeDir }}{{ m2ee_configDir }}{{ m2ee_configFile }}"
     backrefs=yes
     state=present
     regexp={{ item.varname }}

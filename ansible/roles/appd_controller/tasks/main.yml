@@ -1,0 +1,58 @@
+---
+# tasks file for appd_controller
+#
+- name:  Ensures {{ dest_folder }} dir exists
+  file:  path={{ dest_folder }} state=directory
+  tags:  appdc
+
+- name:  Ensures Controller Folder dir exists
+  file:  path={{ controller_folder }} state=directory
+  tags:  appdc
+
+- name:  Ensure Controller not Running
+#  command:  bash -c "ps aux | grep '[a]ppdynamics.controller'"
+  shell:  "pgrep --full [aA]pp[dD]ynamics"
+  register:  controller_running
+  ignore_errors:  yes
+  tags:  appdc
+
+- name:  Dump registered variable
+  debug:  var=controller_running
+  tags:  appdc
+
+- name:  Copy Controller file
+  copy:  src={{ controller_file }} dest={{ dest_folder }}{{ controller_file }} force=no
+  when:  controller_running.stdout == ""
+  tags:  appdc
+
+- name:  Copy Response Varfile file
+  copy:  src=response.varfile dest={{ dest_folder }}/response.varfile
+  tags:  appdc
+
+- name:  Copy License file
+  copy:  src=license.lic dest={{ controller_folder }}/license.lic
+  tags:  appdc
+
+- name:  Ensure Controller Installation file is executable
+  file:  path={{ dest_folder }}{{ controller_file }} mode=0755
+  when:  controller_running.stdout == ""
+  tags:  appdc
+
+#- name: Ensure Libaio
+#    command: "sudo apt-get --assume-yes install libaio1"
+#    when: controller_running | trim == ''
+
+# - name: Kill process if running
+#   shell: kill $(ps aux | grep 'machineagent.jar' | awk '{print $2}')
+#   ignore_errors: yes
+#   when: restart == "y"
+#   # command: "killall machineagent.jar"
+
+- name:  Start the Installation
+  command:  "{{ dest_folder }}/{{controller_file}} -q -varfile {{ dest_folder }}response.varfile"
+  when:  controller_running.stdout == ""
+  async:  315360000
+  poll:  0
+  tags:  appdc
+#
+# fin    

@@ -10,12 +10,12 @@
 # Configuring runtime parameters - jvm args
 # Used in template file
 #
-machineagent_controllerHostName: labappd01.itlab.com
-machineagent_controllerPort: 8090
-machineagent_applicationName: ACMEOnline
-machineagent_tierName: Inventory
-machineagent_nodeName: Inventory
-machineagent_accountAccessKey: e8c469e5-94a3-49d8-8efc-732ff91204fe
+machineagent_controllerHostName: "{{ controller_hostName }}"
+machineagent_controllerPort: "{{ controller_port }}"
+machineagent_applicationName: "{{ applicationName }}"
+machineagent_tierName: "{{ agent_tierName }}"
+machineagent_nodeName: "{{ agent_nodeName }}"
+machineagent_accountAccessKey: "{{ agent_accountAccessKey }}"
 machineagent_uniqueHostId: "{{ ansible_hostname }}"
 # Moved to vars/ renamed to machineagent_processName
 #machineagent_process: machineagent.jar

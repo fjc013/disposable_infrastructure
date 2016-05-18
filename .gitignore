@@ -37,3 +37,7 @@ logs
 .Trashes
 ehthumbs.db
 
+# One Off Appd Controller Shell #
+#################################
+controller_64bit_linux-4.2.2.0.sh
+

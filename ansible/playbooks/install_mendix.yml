@@ -4,12 +4,20 @@
 #
 
 - name: install ntp
-  hosts:  mendix
+  hosts:  mendix:controller
   become: true
   become_method:  sudo
 #
   roles:
     - ntp
+
+- name: build the AppD controller
+  hosts:  controller
+  become: true
+  become_method: sudo
+  #
+  roles:
+    - appd_controller    
     
 - name: install m2ee tools
   hosts:  mendix
@@ -66,5 +74,5 @@
 #
   roles:
     - appd_mendix
-
+#
 # fin

@@ -1,0 +1,47 @@
+---
+- hosts: controller
+  remote_user: vagrant
+  tasks:
+    - include_vars: ../paths.yml
+    - include_vars: ../appd_vars.yml
+
+    - name: Ensures {{dest_folder}} dir exists
+      file: path={{dest_folder}} state=directory
+
+    - name: Ensures Controller Folder dir exists
+      file: path={{controller_folder}} state=directory
+
+    - name: Ensure Controller not Running
+      command: bash -c "ps aux | grep '[a]ppdynamics.controller'"
+      register: controller_running
+      ignore_errors: true
+
+    - name: Copy Controller file
+      copy: src={{ src_folder }}{{ controller_file }} dest={{ dest_folder }}{{ controller_file }} force=no
+      when: controller_running | trim == ''
+
+    - name: Copy Response Varfile file
+      copy: src={{ inventory_dir }}/controller/response.varfile dest={{ dest_folder }}/response.varfile
+
+    - name: Copy License file
+      copy: src={{ inventory_dir }}/controller/license.lic dest={{ controller_folder }}/license.lic
+
+    - name: Ensure Controller Installation file is executable
+      file: path="{{ dest_folder }}{{ controller_file }}" mode=0755
+      when: controller_running | trim == ''
+
+    - name: Ensure Libaio
+      command: "sudo apt-get --assume-yes install libaio1"
+      when: controller_running | trim == ''
+
+    # - name: Kill process if running
+    #   shell: kill $(ps aux | grep 'machineagent.jar' | awk '{print $2}')
+    #   ignore_errors: yes
+    #   when: restart == "y"
+    #   # command: "killall machineagent.jar"
+
+    - name: Start the Installation
+      command: "{{ dest_folder }}/{{controller_file}} -q -varfile {{ dest_folder }}/response.varfile"
+      when: controller_running | trim == ''
+      async: 315360000
+      poll: 0

@@ -1,4 +1,12 @@
 ---
+#
+# See if the machine agent process is running
+- name: Check the machine agent process
+  shell:  "pgrep --full {{ machineagent_processName }}"
+  register:  machineagent_running
+  ignore_errors:  yes
+  tags:  machineagent
+#
 - name: Ensures {{machineagent_destFolder}} dir exists
   file: path={{machineagent_destFolder}} state=directory
   tags: machineagent
@@ -19,7 +27,7 @@
 - name: Kill process if running
   shell: pkill --full {{ machineagent_processName }}
   ignore_errors: yes
-  when: machineagent_restart == "y"
+  when: machineagent_running != ""
   tags: machineagent
 #
 # ---

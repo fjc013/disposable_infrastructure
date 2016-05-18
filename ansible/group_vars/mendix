@@ -47,8 +47,6 @@ mendix_logdir: "/var/log/mendix/{{mendix_user}}/"
 m2ee_appAgentHome: /opt/appdynamics/appagent/
 m2ee_appAgentJar: javaagent.jar
 #
-# Insert the following into the m2ee.yaml javaopts section
-m2ee_jvmArg: '   "-javaagent:{{ m2ee_appAgentHome }}{{ m2ee_appAgentJar }}",'
 #
 # Insert an mxnode: section into m2ee.yaml that defines the mxjar_repo list
 #  required for the download_runtime m2ee command - must be writable
@@ -61,7 +59,7 @@ mxjar_repo:
 # regex=(^[\s]varname\:) use backrefs as \1\ new value
 #
 m2ee_vars:
-  - { varname: '(^[\s]*app_name\:)', value: '\1 Most Excellent Demo App' }
+  - { varname: '(^[\s]*app_name\:)', value: '\1 ACMEOnline' }
   - { varname: '(^[\s]*app_base\:)', value: '\1 /srv/mendix/{{ mendix_user }}' }
   - { varname: '(^[\s]*admin_pass\:)', value: '\1 $SomeSalt$' }
   - { varname: '(^[\s]*logfile\:)', value: '\1 {{ mendix_logdir }}log' }
@@ -80,3 +78,19 @@ sample_mda: '{{ mda_url }}{{ mda_filename }}'
 # sample_mda: http://download.mendix.com/sample/sample.mda
 destdir_mda: /srv/mendix/{{ mendix_user }}/data/model-upload/
 expect_m2ee_script: setup.exp
+#
+# All Mendix hosts share the same AppD controller info
+#
+# Formerly known as appd_vars.yml- from Thiago
+#
+controller_hostName: 192.168.100.103
+controller_port: 8090
+applicationName: ACMEOnline
+agent_tierName: Inventory
+agent_nodeName: Inventory
+# agent_accountAccessKey: AASDFASFASF
+agent_accountAccessKey: e8c469e5-94a3-49d8-8efc-732ff91204fe
+#
+#
+# Insert the following into the m2ee.yaml javaopts section
+m2ee_jvmArg: '   "-javaagent:{{ m2ee_appAgentHome }}{{ m2ee_appAgentJar }}", "-Dappdynamics.agent.uniqueHostId={{ ansible_hostname }}", "-Dappdynamics.controller.hostName={{ controller_hostName }}", "-Dappdynamics.controller.port={{ controller_port }}", "-Dappdynamics.agent.applicationName={{ applicationName }}", "-Dappdynamics.agent.tierName={{ agent_tierName }}", "-Dappdynamics.agent.nodeName={{ agent_nodeName }}", "-Dappdynamics.agent.accountAccessKey={{ agent_accountAccessKey }}",'

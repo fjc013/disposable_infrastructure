@@ -20,6 +20,11 @@
     insertafter='javaopts'
     line="{{ m2ee_jvmArg }}"
   tags: m2ee
+#
+# Dump the m2ee_jvmArg
+- name: dump the m2ee_jvmArg
+  debug: msg="m2ee_jvmArg is {{ m2ee_jvmArg }}"
+  tags: m2ee
 # "
 # 2. Modify the felix.properties.template file
 #

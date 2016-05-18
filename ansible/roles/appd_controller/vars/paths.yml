@@ -1,0 +1,8 @@
+inventory_dir: /Users/thiagomagro/appdynamics/ansible/
+src_folder: /Users/thiagomagro/Downloads/
+controller_file: controller_64bit_linux.sh
+controller_folder: /home/vagrant/AppDynamics/Controller/
+eum_file: euem-64bit-linux.sh
+eventsservice_file: MachineAgent.zip
+dest_folder: /home/vagrant/AppDynamics/
+dest_file: controller_64bit_linux.sh

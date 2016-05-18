@@ -65,7 +65,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mendix2.vm.hostname = "mendix2.local"
     mendix2.ssh.forward_agent = true
   end
-  
+  config.vm.define :appdc do |appdc|
+    appdc.vm.box = "bento/centos-7.2"
+    appdc.vm.network :private_network, ip: "192.168.100.103"
+    appdc.vm.hostname = "controller.local"
+    appdc.ssh.forward_agent = true
+  end
 
 
 
