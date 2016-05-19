@@ -1,3 +1,4 @@
+dev.local ansible_host=192.168.100.100 ansible_user=vagrant
 mendix1.local ansible_host=192.168.100.101 ansible_user=vagrant
 mendix2.local ansible_host=192.168.100.102 ansible_user=vagrant
 controller.local ansible_host=192.168.100.103 ansible_user=vagrant

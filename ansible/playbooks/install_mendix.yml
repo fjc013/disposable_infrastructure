@@ -2,15 +2,23 @@
 #
 # This playbook installs and configures mendix on remote machines (centos only)
 #
-
+# - ntp: Install, configure, and start ntpd service on RedHat and Debian hosts. 
+# -- Also sets appropriate timezone, and disables local RTC usage.
+# -- handlers: restart ntp
+#
 - name: install ntp
-  hosts:  mendix:controller
+  hosts:  all
   become: true
   become_method:  sudo
 #
   roles:
     - ntp
-
+#
+#
+# - appd_controller: Builds an AppDynamics controller. 
+# -- Moves controller install source (800MB), license file, and startup response file to host. 
+# -- Executes installation and startup.
+#
 - name: build the AppD controller
   hosts:  controller
   become: true
@@ -18,7 +26,15 @@
   #
   roles:
     - appd_controller    
-    
+#
+# - install_mendix: Install and configure m2ee tools and dependencies. 
+# -- Creates and places m2ee specific repo on host. 
+# -- Retrieves the Extra Packages for Enterprise Linux rpm, and installs. Installs m2ee tools and dependencies from new repo. 
+# -- Creates the m2ee/mendix user group, user with encrypted password, home directory, and required hidden directory.
+# -- Creates the mendix directory structure used later during runtime download. 
+# -- Creates the logging structures. 
+# -- Copies provided m2ee.yaml temples, user and system-wide to appropriate locations.
+#    
 - name: install m2ee tools
   hosts:  mendix
   become: true
@@ -26,6 +42,14 @@
 #
   roles:
     - install_mendix
+#
+# - machineagent: Install and start the machine agent. Add system startup/shutdown scripts.
+# -- Creates the installation directory
+# -- Moves installation archive to host
+# -- Extracts the package
+# -- Starts the machine agent using Controller attributes
+# -- Uses a template to create the system init script
+# -- Creates the symlinks for appropriate run levels
 #
 - name: install appdynamics machine agent
   hosts:  mendix
@@ -35,6 +59,13 @@
   roles:
     - machineagent
 #
+# - appagent: Installs and prepares the app agent.
+# -- Determines the java vendor on the host
+# -- Creates the app agent install directory
+# -- Moves the installation archive to the host, and unpacks
+# -- Ensure the appagent is executable
+# -- Create an Inventory directory - omitted from appagent archive
+#
 - name: install appdynamics app agent
   hosts: mendix
   become: true
@@ -42,6 +73,14 @@
 #
   roles:
     - appagent
+#
+# - postgresql: Installs and configures PostgreSQL and dependencies 
+# -- Installs the PostgreSQL Global Development Group package
+# -- Installs PostgreSQL 
+# -- Initializes the system database
+# -- Creates the configuration structure, and sets config options
+# -- Performs a backup
+# -- Starts PostgreSQL and helper processes
 #
 - name: install PostgreSQL
   hosts: mendix
@@ -51,6 +90,9 @@
   roles:
     - postgresql
 #
+# - mendixdb: Create PostgreSQL database and database user for Mendix
+# -- Uses md5 encrypted passwords
+#
 - name: Add Mendix DB table and DB user
   hosts: mendix
   become: true
@@ -59,6 +101,13 @@
   roles:
     - mendixdb
 #
+# - config_m2ee: Customizes m2ee.yaml. Retrieves sample mda file, and runs m2ee to download runtime.
+# -- Modify m2ee.yaml with local customizations
+# -- Retrieves sample.mda from Mendix download site
+# -- Handlers:
+# --- move m2ee script: template that creates expect script on target host
+# --- execute m2ee script: runs expect script. Unpacks sample.mda, downloads runtime, starts the application, and quits
+#
 - name: Configure User m2ee.yaml file
   hosts: mendix
   become: true
@@ -66,6 +115,14 @@
 #
   roles:
     - config_m2ee
+#
+# - appd_mendix: Adds app agent jvm attributes to m2ee.yaml and mendix felix.template . Restarts m2ee.
+# -- Adds app agent jvm arguments to javaopts list in m2ee.yaml
+# -- Inserts app agent boot delegation into felix.template
+# -- Changes last line of felix.template to a continuation, and adds new class at end
+# -- Restarts m2ee
+# -- Send completion notice to Slack Channel
+# -- Handlers: restart_m2ee
 #
 - name: Complete AppD instrumentation of Mendix
   hosts: mendix

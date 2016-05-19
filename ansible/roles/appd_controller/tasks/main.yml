@@ -18,6 +18,7 @@
 
 - name:  Dump registered variable
   debug:  var=controller_running
+  when: debug_flag is defined  
   tags:  appdc
 
 - name:  Copy Controller file

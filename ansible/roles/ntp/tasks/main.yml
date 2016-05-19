@@ -15,7 +15,19 @@
     with_items: '{{ntp_pkgs}}'
     when: ansible_os_family == "Debian"
     tags: ntp
-    
+#
+# Set the machine's time zone - timedatectl is available on Ubuntu 14
+- name: RedHat set time zone
+  command:  timedatectl set-timezone America/New_York
+#  when: ansible_os_family == "RedHat"
+  tags: ntp
+#
+# Disable the machine's RTC usage  
+- name:  RedHat disable RTC
+  command:  timedatectl set-local-rtc 0
+#  when: ansible_os_family == "RedHat"
+  tags: ntp
+#       
 -   name: Copy the ntp.conf template file
     template: src=ntp.conf.j2 dest=/etc/ntp.conf
     tags: ntp

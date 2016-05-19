@@ -25,6 +25,7 @@
   tags: appagent
 #
 - debug: msg="Java vendor {{ java_vendor }} is"
+  when: debug_flag is defined
   tags: appagent
 #
 # Install the App Server Agent for java on RedHat derivatives
@@ -45,3 +46,20 @@
   file: path={{ appagent_destFolder }}{{ appagent_processName }} mode=0755
   tags: appagent
 #
+# The appagent archive is missing an Inventory directory within the verx.x.x/logs directory
+# find where it goes, and create it.
+#
+- name: Find where the Inventory directory goes
+  shell: find {{ appagent_destFolder }} -name 'logs' -type d -print
+  register: path_to_ver_logs
+  tags: appagent
+#
+# Create the directory
+#
+- name: Create the Inventory directory
+  file: path={{ path_to_ver_logs.stdout }}/Inventory state=directory mode=0777
+  when: path_to_ver_logs.stdout != ""
+  tags: appagent
+#  
+#
+# fin

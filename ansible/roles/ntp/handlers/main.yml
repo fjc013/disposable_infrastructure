@@ -1,5 +1,8 @@
 ---
 # Handler to take care of common notifications
 #
-  - name: restart ntp
-    service: name={{ ntp_service_name }} state=restarted enabled=yes
+- name: restart ntp
+  service: name={{ ntp_service_name }} state=restarted enabled=yes
+  tags: ntp
+
+  

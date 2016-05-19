@@ -25,3 +25,5 @@
   when: "'IBM' in java_properties.stdout"
 
 - debug: msg="Java vendor is {{ java_vendor }}"
+  when: debug_flag is defined
+

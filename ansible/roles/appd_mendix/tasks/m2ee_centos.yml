@@ -9,6 +9,7 @@
 #
 - name: Dump m2ee_jvmArg
   debug: msg="var m2ee_var {{ m2ee_jvmArg }} from vars"
+  when: debug_flag is defined
   tags: m2ee
 
 # 1. Modify /home/mxapp/.m2ee/m2ee.yaml
@@ -24,6 +25,7 @@
 # Dump the m2ee_jvmArg
 - name: dump the m2ee_jvmArg
   debug: msg="m2ee_jvmArg is {{ m2ee_jvmArg }}"
+  when: debug_flag is defined  
   tags: m2ee
 # "
 # 2. Modify the felix.properties.template file
@@ -37,6 +39,7 @@
 #
 - name: DEbug major path
   debug: var=m2ee_majorPath
+  when: debug_flag is defined  
   tags: [m2ee, felix]
 # 
 # Use new variable to register full path to template
@@ -50,6 +53,7 @@
 #
 - name: debug full path
   debug: var=m2ee_templatePath
+  when: debug_flag is defined  
   tags: [m2ee, felix]
 #
 # Modify the template file. 
