@@ -1,0 +1,29 @@
+---
+#
+# Copy AppD Controller install file to target
+#
+# - name: Download MD5 checksum from nexus
+#   get_url: url="{{ md5_url }}" dest="/tmp/installer.md5" mode=0644
+
+# - name: Fetch MD5 checksum from box
+#   command: cat /tmp/installer.md5
+#   register: md5
+
+- name: Check to see if controller was already downloaded
+  stat: path={{ installer }}
+  register: st1
+  tags: appdc
+
+- name: Copy controller installer from Ansible Controller 
+  copy: src="controller_64bit_linux-4.2.2.0.sh" dest="{{ installer }}" force=yes mode=0755 
+  when: st1.stat.exists == false
+  tags: appdc
+
+#- name: Download controller installer from nexus
+#  get_url: url="{{ installer_url }}" dest="{{ installer }}" force=yes mode=0755 
+#  when: st1.stat.exists == false or st1.stat.md5 != md5.stdout
+
+#- name: Compare MD5 checksum against download
+#  stat: path={{ installer }}
+#  register: st2
+#  failed_when: st2.stat.md5 != md5.stdout

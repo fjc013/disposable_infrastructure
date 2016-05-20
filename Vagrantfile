@@ -15,7 +15,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-
+  #
+  # Set up the vagrant hostmanager plugin to populate guests /etc/hosts file
+  #
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
+  #
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "base"
   # authorize_key_for_root config, '~/.ssh/id_dsa.pub', '~/ssh/id_rsa.pub'
@@ -31,6 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     dev.vm.network :private_network, ip: "192.168.100.100"
     dev.vm.hostname = "dev.local"
     dev.ssh.forward_agent = true
+    dev.hostmanager.aliases = %w(dev)
     #
     # Allow symlinks, set ram to 2gb (not)
     #
@@ -53,23 +62,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mendix1.vm.box = "bento/centos-7.2"
     # mendix1.vm.box = "ubuntu/trusty64"
     mendix1.vm.network :private_network, ip: "192.168.100.101"
-    mendix1.vm.network :forwarded_port, guest: 8000, host: 10001
+    mendix1.vm.network :forwarded_port, guest: 8000, host: 10101
     mendix1.vm.hostname = "mendix1.local"
     mendix1.ssh.forward_agent = true
+    mendix1.hostmanager.aliases = %w(mendix1)
   end
   config.vm.define :mendix2 do |mendix2|
     mendix2.vm.box = "bento/centos-7.2"
     # mendix2.vm.box = "ubuntu/trusty64"
     mendix2.vm.network :private_network, ip: "192.168.100.102"
-    mendix2.vm.network :forwarded_port, guest: 8000, host: 10002
+    mendix2.vm.network :forwarded_port, guest: 8000, host: 10102
     mendix2.vm.hostname = "mendix2.local"
     mendix2.ssh.forward_agent = true
+    mendix2.hostmanager.aliases = %w(mendix2)
   end
   config.vm.define :appdc do |appdc|
     appdc.vm.box = "bento/centos-7.2"
     appdc.vm.network :private_network, ip: "192.168.100.103"
+    appdc.vm.network :forwarded_port, guest: 8090, host: 10103
     appdc.vm.hostname = "controller.local"
     appdc.ssh.forward_agent = true
+    appdc.hostmanager.aliases = %w(controller)
   end
 
 

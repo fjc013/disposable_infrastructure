@@ -12,11 +12,3 @@ eventsservice_file: MachineAgent.zip
 dest_folder: /home/vagrant/AppDynamics/
 dest_file: controller_64bit_linux.sh
 #
-# Formerly known as appd_vars.yml
-#
-#controller_hostName: 192.168.100.103
-#controller_port: 8090
-#applicationName: ACMEOnline
-#agent_tierName: Inventory
-#agent_nodeName: Inventory
-#agent_accountAccessKey: AASDFASFASF

@@ -1,0 +1,39 @@
+---
+#
+# AppD Controller prerequisites
+#
+
+- name: Install packages
+  become: yes
+  yum: pkg={{ item }} state=installed
+  with_items:
+      - libaio
+      - libaio-devel
+  tags: appdc
+
+- name: Load network bridge module
+  command: /sbin/modprobe bridge
+  become: yes
+  tags: appdc
+
+- name: Set kernel params for a happy controller
+  sysctl: name={{ item.name }} value={{ item.value }}
+  with_items:
+    - { name: 'fs.file-max', value: '819200' }
+    - { name: 'net.ipv4.tcp_syn_retries', value: '8' }
+    - { name: 'vm.swappiness', value: '0'}
+  become: yes
+  tags: appdc
+
+- name: Increase limits on open files
+  lineinfile: dest={{ item.dest }} line={{ item.line }}
+  with_items:
+    - { dest: '/etc/security/limits.conf', line: "*        soft    nofile        819200" }
+    - { dest: '/etc/security/limits.conf', line: "*        hard    nofile        819200" }
+  become: yes
+  tags: appdc
+
+- name: Create AppDynamics user 
+  user: name=appd comment="AppDynamics" home="{{ home_dir }}" createhome=yes
+  become: yes
+  tags: appdc

@@ -1,4 +1,5 @@
-
+# Response file for AppD Controller Configuration
+userName=admin
 password=pa55word
 rePassword=pa55word
 rootUserPassword=pa55word2
@@ -8,18 +9,17 @@ mysqlRootUserPassword=DRvYYv9eq6
 controllerConfig=demo
 iiopPort=3700
 serverPort=8090
-serverHostName=192.168.1.100
+serverHostName=controller.local
 haControllerType=notapplicable
 controllerTenancyMode=single
 adminPort=4848
 sys.languageId=en
 jmsPort=7676
-sys.installationDir=/home/vagrant/AppDynamics/Controller
+sys.installationDir=/opt/AppDynamics/Controller
 databasePort=3388
-userName=admin
 sslPort=8181
-realDataDir=/home/vagrant/AppDynamics/Controller/db/data
-elasticSearchDataDir=/home/vagrant/AppDynamics/Controller/events_service/analytics-processor
+realDataDir=/opt/AppDynamics/Controller/db/data
+elasticSearchDataDir=/opt/AppDynamics/Controller/events_service/analytics-processor
 disableEULA=true
 reportingServiceHTTPPort=8020
 reportingServiceHTTPSPort=8021
