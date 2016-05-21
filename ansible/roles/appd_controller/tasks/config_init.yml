@@ -1,11 +1,17 @@
 ---
 #
+# Wait for the Controller/bin directory to be created from the installer
+# 
+- name: Wait for {{ install_dir }}/bin/setup.sh file
+  wait_for: path="{{ install_dir }}/bin/setup.sh"
+  tags: appdc
+
 # Configure AppD for System init
 #
 - name: Install init script
-  copy: src=init.d.sh dest="{{ install_dir }}/bin" mode=0755 
-  become: yes
-  become_user: appd
+  copy: src=init.d.sh dest="{{ install_dir }}/bin/init.d.sh" mode=0755 owner=appd group=appd
+#  become: yes
+#  become_user: appd
   tags: appdc
 
 - name: Link init script into init.d folder

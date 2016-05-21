@@ -6,9 +6,21 @@
   template: src=response.varfile.j2 dest=/tmp/response.varfile mode=0644
   tags: appdc
 
+# create the Controller directory
+- name: Create Controller directory
+  file: path="{{ install_dir }}" state=directory owner=appd group=appd mode=0775
+  tags: appdc
+
+- name: Install test license 
+  copy: src=license.lic dest="{{ install_dir }}/license.lic" owner=appd group=appd mode=0775
+#  become: yes
+#  become_user: appd
+#  become_method: sudo
+  tags: appdc
+
 - name: Install controller 
   command: "{{ installer }} -q -varfile /tmp/response.varfile"
-  become: yes
+#  become: yes
   become_user: appd
   become_method: sudo
   async: 5000
@@ -25,13 +37,6 @@
 #
 # Wait for Controller directory to be present
 # 
-- name: Wait for Controller directory
-  wait_for: "{{ install_dir }}/install.log"
-  tags: appdc
-
-- name: Install test license 
-  copy: src=license.lic dest="{{ install_dir }}/license.lic" owner=appd
-#  become: yes
-#  become_user: appd
-#  become_method: sudo
-  tags: appdc
+#- name: Wait for Controller directory
+#  wait_for: "{{ install_dir }}/install.log"
+#  tags: appdc

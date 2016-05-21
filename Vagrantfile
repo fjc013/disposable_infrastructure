@@ -83,6 +83,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     appdc.vm.hostname = "controller.local"
     appdc.ssh.forward_agent = true
     appdc.hostmanager.aliases = %w(controller)
+  #
+    appdc.vm.provider :virtualbox do |vb|
+      #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #
   end
 
 
