@@ -19,13 +19,13 @@
 # -- Moves controller install source (800MB), license file, and startup response file to host. 
 # -- Executes installation and startup.
 #
-- name: build the AppD controller
-  hosts:  controller
-  become: true
-  become_method: sudo
+#- name: build the AppD controller
+#  hosts:  controller
+#  become: true
+#  become_method: sudo
   #
-  roles:
-    - appd_controller    
+#  roles:
+#    - appd_controller    
 #
 # - install_mendix: Install and configure m2ee tools and dependencies. 
 # -- Creates and places m2ee specific repo on host. 

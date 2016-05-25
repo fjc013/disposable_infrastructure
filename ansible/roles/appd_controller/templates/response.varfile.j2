@@ -9,8 +9,10 @@ elasticSearchDataDir={{ install_dir }}/events_service/analytics-processor
 
 mysqlRootUserPassword={{ mysql_root_password }}
 rootUserPassword={{ root_password }}
+rootUserRePassword={{ root_password }}
 userName={{ first_username }}
 password={{ first_password }}
+rePassword={{ first_password }}
 
 iiopPort=3700
 jmsPort=7676
@@ -21,8 +23,10 @@ elasticSearchPort=9200
 adminPort=4848
 sslPort=8181
 restAPIAdminPort=9081
+reportingServiceHTTPPort=8020
+reportingServiceHTTPSPort=8021
 
-serverHostName=controller.local
+serverHostName=192.168.100.103
 #serverHostName=localhost.localdomain
 
 controllerTenancyMode=single

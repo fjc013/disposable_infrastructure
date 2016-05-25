@@ -30,7 +30,7 @@ m2ee_sunNioCs: "\tsun.nio.cs,\x5C"
 # Template class terminator
 m2ee_comSingularity: "\tcom.singularity"
 #
-m2ee_user: mxapp
+m2ee_user: '{{ mendix_user }}'
 m2ee_script: /usr/bin/m2ee
 m2ee_restart: restart
 m2ee_start: start

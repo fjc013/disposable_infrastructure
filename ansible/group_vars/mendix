@@ -83,13 +83,20 @@ expect_m2ee_script: setup.exp
 #
 # Formerly known as appd_vars.yml- from Thiago
 #
-controller_hostName: 192.168.100.103
+# Hand rolled Controller from playbook
+# controller_hostName: 192.168.100.103
+#
+# Non-Prod Controller built by ESM
+controller_hostName: npappd.erieinsurance.com
 controller_port: 8090
 applicationName: ACMEOnline
 agent_tierName: Inventory
-agent_nodeName: Inventory
-# agent_accountAccessKey: AASDFASFASF
-agent_accountAccessKey: e8c469e5-94a3-49d8-8efc-732ff91204fe
+agent_nodeName: '{{ ansible_hostname }}'
+# Keys are generated at the Controller during build
+# agent_accountAccessKey: e8c469e5-94a3-49d8-8efc-732ff91204fe
+#
+# Non-Prod Controller key
+agent_accountAccessKey: 3be9858c-0790-4677-af18-9c7abc756aa2 
 #
 #
 # Insert the following into the m2ee.yaml javaopts section

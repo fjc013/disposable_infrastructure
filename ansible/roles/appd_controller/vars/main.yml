@@ -5,8 +5,8 @@
 
 mysql_root_password: singcontroller
 root_password: vagrant
-first_username: user1
-first_password: welcome
+first_username: apm
+first_password: pa55word
 home_dir: /opt/AppDynamics
 
 
