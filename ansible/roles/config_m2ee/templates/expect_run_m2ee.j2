@@ -6,6 +6,8 @@ set timeout 60
 set up "unpack {{ mda_filename }}"
 set dr "download_runtime"
 set start "start"
+set user "create_admin_user"
+set pw "^SteelGuppy10$"
 set quit "quit"
 
 spawn /usr/bin/m2ee --yolo
@@ -31,6 +33,28 @@ expect {
 }
 
 send "$start\r"
+
+expect {
+  timeout { send_user "\nfailed to launch start - timeout\n"; exit 1 }
+  "m2ee({{ mendix_user }}):"
+}
+
+send "$user\r"
+
+expect {
+  timeout { send_user "\nfailed to launch start - timeout\n"; exit 1 }
+  "Type new password for this user:"
+}
+
+send "$pw\r"
+
+expect {
+  timeout { send_user "\nfailed to launch start - timeout\n"; exit 1 }
+  "Type new password for this user again:"
+}
+
+send "$pw\r"
+
 
 expect {
   timeout { send_user "\nfailed to launch quit - timeout\n"; exit 1 }
