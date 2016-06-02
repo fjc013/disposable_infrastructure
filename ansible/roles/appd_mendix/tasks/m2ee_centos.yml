@@ -27,7 +27,19 @@
   debug: msg="m2ee_jvmArg is {{ m2ee_jvmArg }}"
   when: debug_flag is defined  
   tags: m2ee
-# "
+# 
+# Rewrite the javaopts arg java.io.tmpdir in m2ee.yaml
+#
+- name: rewrite java.io.tmpdir
+  replace: dest={{ m2ee_homeDir }}{{ m2ee_configDir }}{{ m2ee_configFile }}
+    regexp='(?P<arg>^[\s]*\"\-Djava\.io\.tmpdir\=).*(?P<tmp>/data/tmp\"\,)'
+    replace='\g<arg>/srv/mendix/mxapp\g<tmp>'
+    owner="{{ mendix_user }}"
+    group="{{ mendix_user }}"
+    mode=0775
+  tags: m2ee
+#
+# 
 # 2. Modify the felix.properties.template file
 #
 # Extract major path to file from YAML config

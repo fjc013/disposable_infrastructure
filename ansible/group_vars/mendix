@@ -100,4 +100,4 @@ agent_accountAccessKey: 3be9858c-0790-4677-af18-9c7abc756aa2
 #
 #
 # Insert the following into the m2ee.yaml javaopts section
-m2ee_jvmArg: '   "-javaagent:{{ m2ee_appAgentHome }}{{ m2ee_appAgentJar }}", "-Dappdynamics.agent.uniqueHostId={{ ansible_hostname }}", "-Dappdynamics.controller.hostName={{ controller_hostName }}", "-Dappdynamics.controller.port={{ controller_port }}", "-Dappdynamics.agent.applicationName={{ applicationName }}", "-Dappdynamics.agent.tierName={{ agent_tierName }}", "-Dappdynamics.agent.nodeName={{ agent_nodeName }}", "-Dappdynamics.agent.accountAccessKey={{ agent_accountAccessKey }}",'
+m2ee_jvmArg: '   "-javaagent:{{ m2ee_appAgentHome }}{{ m2ee_appAgentJar }}", "-Dappdynamics.controller.hostName={{ controller_hostName }}", "-Dappdynamics.controller.port={{ controller_port }}", "-Dappdynamics.agent.applicationName={{ applicationName }}", "-Dappdynamics.agent.tierName={{ agent_tierName }}", "-Dappdynamics.agent.nodeName={{ agent_nodeName }}", "-Dappdynamics.agent.accountAccessKey={{ agent_accountAccessKey }}",'

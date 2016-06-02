@@ -30,9 +30,21 @@
   when: machineagent_running != ""
   tags: machineagent
 #
-# ---
+# Apply custom config to controller-info.xml
+#
+- name: Configure controller-info.xml
+  lineinfile: dest="{{ machineagent_destFolder }}/conf/controller-info.xml" 
+    backrefs=yes
+    state=present
+    regexp={{ item.varname }}
+    line={{ item.value }}
+  with_items:
+    - '{{ vars_controllerInfo }}'
+  tags: machineagent
+#
 - name: Starts the machine agent
-  command: "{{ machineagent_destFolder }}bin/machine-agent -Dappdynamics.controller.hostName={{ machineagent_controllerHostName }} -Dappdynamics.controller.port={{ machineagent_controllerPort }} -Dappdynamics.agent.uniqueHostId={{ ansible_hostname }} -Dappdynamics.agent.accountAccessKey={{ machineagent_accountAccessKey }}"
+#  command: "{{ machineagent_destFolder }}bin/machine-agent -Dappdynamics.controller.hostName={{ machineagent_controllerHostName }} -Dappdynamics.controller.port={{ machineagent_controllerPort }} -Dappdynamics.agent.uniqueHostId={{ ansible_hostname }} -Dappdynamics.agent.accountAccessKey={{ machineagent_accountAccessKey }}"
+  command: "{{ machineagent_destFolder }}bin/machine-agent -Dappdynamics.controller.hostName={{ machineagent_controllerHostName }} -Dappdynamics.controller.port={{ machineagent_controllerPort }} -Dappdynamics.agent.accountAccessKey={{ machineagent_accountAccessKey }}"
   async: 315360000
   poll: 0
   tags: machineagent

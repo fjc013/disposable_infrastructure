@@ -76,20 +76,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mendix2.ssh.forward_agent = true
     mendix2.hostmanager.aliases = %w(mendix2)
   end
-  config.vm.define :appdc do |appdc|
-    appdc.vm.box = "bento/centos-7.2"
-    appdc.vm.network :private_network, ip: "192.168.100.103"
-    appdc.vm.network :forwarded_port, guest: 8090, host: 10103
-    appdc.vm.hostname = "controller.local"
-    appdc.ssh.forward_agent = true
-    appdc.hostmanager.aliases = %w(controller)
+  #config.vm.define :appdc do |appdc|
+  #  appdc.vm.box = "bento/centos-7.2"
+  #  appdc.vm.network :private_network, ip: "192.168.100.103"
+  #  appdc.vm.network :forwarded_port, guest: 8090, host: 10103
+  #  appdc.vm.hostname = "controller.local"
+  #  appdc.ssh.forward_agent = true
+  #  appdc.hostmanager.aliases = %w(controller)
   #
-    appdc.vm.provider :virtualbox do |vb|
-      #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
-      vb.customize ["modifyvm", :id, "--memory", "1024"]
-    end
+  #  appdc.vm.provider :virtualbox do |vb|
+  #    #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+  #    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  #  end
     #
-  end
+  #end
 
 
 

@@ -11,5 +11,19 @@ machineagent_processName: machineagent.jar
 ##
 machineagent_restart: "y"
 ##
+# Define Controller-info.xml attributes
+# use named backreferences when the content following the 
+#  backreference is numeric - or just always use them.
 #
+vars_controllerInfo:
+  - { varname: '(^[\s]*<controller-host>)', value: '\1{{ controller_hostName }}</controller-host>' }
+  - { varname: '(?P<port>^[\s]*<controller-port>)', value: '\g<port>{{ controller_port }}</controller-port>' }
+  - { varname: '(^[\s]*<controller-ssl-enabled>)', value: '\1false</controller-ssl-enabled>' }
+  - { varname: '(^[\s]*<enable-orchestration>)', value: '\1false</enable-orchestration>' }
+  - { varname: '(^[\s]*<account-name>)', value: '\1</account-name>' }
+  - { varname: '(?P<key>^[\s]*<account-access-key>)', value: '\g<key>{{ agent_accountAccessKey }}</account-access-key>' }
+  - { varname: '(^[\s]*<application-name>)', value: '\1{{ applicationName }}</application-name>' }
+  - { varname: '(^[\s]*<tier-name>)', value: '\1{{ agent_tierName }}</tier-name>' }
+  - { varname: '(^[\s]*<node-name>)', value: '\1{{ agent_nodeName }}</node-name>' }
+  - { varname: '(^[\s]*<force-agent-registration>)', value: '\1true</force-agent-registration>' }
 #

@@ -54,12 +54,31 @@
   register: path_to_ver_logs
   tags: appagent
 #
-# Create the directory
+# Create the Inventory directory
 #
 - name: Create the Inventory directory
   file: path={{ path_to_ver_logs.stdout }}/Inventory state=directory mode=0777
   when: path_to_ver_logs.stdout != ""
   tags: appagent
 #  
+#
+# Create the host specific log directory
+#
+- name: Create the host-specific log directory
+  file: path={{ path_to_ver_logs.stdout }}/{{ ansible_hostname }} state=directory mode=0777
+  when: path_to_ver_logs.stdout != ""
+  tags: appagent
+#  
+# Apply custom config to controller-info.xml
+#
+- name: Configure controller-info.xml
+  lineinfile: dest="{{ appagent_destFolder }}/conf/controller-info.xml" 
+    backrefs=yes
+    state=present
+    regexp={{ item.varname }}
+    line={{ item.value }}
+  with_items:
+    - '{{ vars_controllerInfo }}'
+  tags: appagent
 #
 # fin

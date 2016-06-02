@@ -16,7 +16,8 @@ machineagent_applicationName: "{{ applicationName }}"
 machineagent_tierName: "{{ agent_tierName }}"
 machineagent_nodeName: "{{ agent_nodeName }}"
 machineagent_accountAccessKey: "{{ agent_accountAccessKey }}"
-machineagent_uniqueHostId: "{{ ansible_hostname }}"
+# machineagent_uniqueHostId not needed
+machineagent_uniqueHostId: no
 # Moved to vars/ renamed to machineagent_processName
 #machineagent_process: machineagent.jar
 machineagent_loggingDir: no
