@@ -26,3 +26,6 @@ ln -s /vagrant/ansible/etc/ansible/ /etc/ansible
 echo "Creating the ansible log file"
 sudo touch /var/log/ansible.log
 sudo chmod 777 /var/log/ansible.log
+
+echo "Moving vault.secret due to Vagrant permission defaults"
+cp /vagrant/ansible/vault.secret /tmp/vault.secret; chmod 644 /tmp/vault.secret
