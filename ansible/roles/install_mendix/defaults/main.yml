@@ -1,2 +1,6 @@
 ---
 # defaults file for install_mendix
+# Required Mendix Dependencies
+epel_repo: "http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm"
+epel_repo_rpm: "/var/tmp/epel-release-7-8.noarch.rpm"
+#

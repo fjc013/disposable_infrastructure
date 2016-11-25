@@ -59,22 +59,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Define App Target VMs
   #
   config.vm.define :mendix1 do |mendix1|
-    mendix1.vm.box = "bento/centos-7.2"
+    mendix1.vm.box = "bento/centos-7.1"
+    # mendix1.vm.box = "bento/centos-7.2"
     # mendix1.vm.box = "ubuntu/trusty64"
     mendix1.vm.network :private_network, ip: "192.168.100.101"
     mendix1.vm.network :forwarded_port, guest: 8000, host: 10101
     mendix1.vm.hostname = "mendix1.local"
+    mendix1.vm.synced_folder ".", "/vagrant", disabled: true
     mendix1.ssh.forward_agent = true
     mendix1.hostmanager.aliases = %w(mendix1)
   end
   config.vm.define :mendix2 do |mendix2|
-    mendix2.vm.box = "bento/centos-7.2"
+    mendix2.vm.box = "bento/centos-7.1"
     # mendix2.vm.box = "ubuntu/trusty64"
     mendix2.vm.network :private_network, ip: "192.168.100.102"
     mendix2.vm.network :forwarded_port, guest: 8000, host: 10102
     mendix2.vm.hostname = "mendix2.local"
+    mendix2.vm.synced_folder ".", "/vagrant", disabled: true
     mendix2.ssh.forward_agent = true
     mendix2.hostmanager.aliases = %w(mendix2)
+    # mendix2.vm.provider "virtualbox" do |g|
+    	# g.gui = true
+    # end
   end
   #config.vm.define :appdc do |appdc|
   #  appdc.vm.box = "bento/centos-7.2"

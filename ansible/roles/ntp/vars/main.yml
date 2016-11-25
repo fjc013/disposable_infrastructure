@@ -1,3 +1,8 @@
 ---
 env:
  RUNLEVEL: 1
+#
+# Define Host's time zone
+host_timeZone: America/New_York
+#host_timeZone: America/Chicago
+#

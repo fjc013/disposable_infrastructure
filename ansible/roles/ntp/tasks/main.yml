@@ -18,7 +18,7 @@
 #
 # Set the machine's time zone - timedatectl is available on Ubuntu 14
 - name: RedHat set time zone
-  command:  timedatectl set-timezone America/New_York
+  command:  timedatectl set-timezone {{ host_timeZone }}
 #  when: ansible_os_family == "RedHat"
   tags: ntp
 #
